@@ -35,6 +35,14 @@ mongoose.connect("mongodb://localhost:27017/collegeDB");
 const studentSchema = new mongoose.Schema({
   fname: String,
   lname: String,
+  attendance: {
+    english: Number,
+    math: Number,
+    java: Number,
+    web: Number
+  },
+  course: String,
+  subjects: [String]
 });
 
 studentSchema.plugin(passportLocalMongoose);
@@ -50,19 +58,52 @@ passport.deserializeUser(Student.deserializeUser());
 
 app.get("/", function(req, res){
   if(req.isAuthenticated()){
-    res.render("home.ejs");
+    if(req.user.fname == "Admin"){
+
+Student.find({}, function(err, found){
+  for(var i=0; i<found.length; i++){
+    if(found[i].fname == "Admin"){
+      found.splice(i, 1);
+    }
+  }
+    res.render("adminDashboard.ejs",{students: found, success: false});
+})
+
+    }else{
+      res.render("home.ejs");
+    }
   }else{
     res.render("welcome.ejs");
   }
 });
 
+
+
 app.get("/sign-up", function(req, res){
-res.render("sign-up.ejs");
+
+  if(req.isAuthenticated()){
+    if(req.user.fname == "Admin"){
+
+    res.render("sign-up.ejs");
+
+    }else{
+      res.redirect("/");
+    }
+  }else{
+    res.render("welcome.ejs");
+  }
 });
 
 
+
+
+
 app.get("/attendance", function(req, res){
-res.render("attendance.ejs");
+
+Student.findById(req.user.id, function(err, found){
+  res.render("attendance.ejs",{student: found});
+})
+
 });
 
 app.get("/faculty", function(req, res){
@@ -90,15 +131,9 @@ app.get("/log-out", function(req, res){
 
 
 
-
-
-
 //POST ROUTES
 
 app.post("/sign-in", function(req, res){
-
-  console.log(req.body.username);
-  console.log(req.body.password);
 
   const user = new Student({
     username: req.body.username,
@@ -136,6 +171,24 @@ app.post("/sign-up", function(req, res){
           if(found){
             found.fname = req.body.fname;
             found.lname = req.body.lname;
+            found.course = req.body.course;
+
+            switch (req.body.course) {
+              case "mca":
+                found.subjects.push("english");
+                found.subjects.push("math");
+                found.subjects.push("java");
+                found.subjects.push("web");
+                break;
+              case "mba":
+              found.subjects.push("english");
+              found.subjects.push("management");
+              found.subjects.push("economics");
+              found.subjects.push("accounting");
+
+            }
+
+
             found.save(function(){
               res.redirect("/");
             });
@@ -149,6 +202,49 @@ app.post("/sign-up", function(req, res){
 });
 
 
+
+
+app.post("/set-attendance", function(req, res){
+
+
+
+Student.findById(req.body.id, function(err, found){
+  if(found){
+
+     if(req.body.english != ""){
+       found.attendance.english = req.body.english;
+     }
+
+      if(req.body.java != ""){
+        found.attendance.java = req.body.java;
+      }
+
+      if(req.body.math != ""){
+        found.attendance.math = req.body.math;
+      }
+
+      if(req.body.web != ""){
+        found.attendance.web = req.body.web;
+      }
+
+
+      found.save();
+
+      Student.find({}, function(err, foundStudents){
+        for(var i=0; i<foundStudents.length; i++){
+          if(foundStudents[i].fname == "Admin"){
+            foundStudents.splice(i, 1);
+          }
+        }
+          res.render("adminDashboard.ejs",{students: foundStudents, success: true});
+      });
+
+  }else{
+      res.send("Something went wrong! please try again later");
+  }
+});
+
+});
 
 
 

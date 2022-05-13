@@ -26,7 +26,7 @@
   </div>
   <div class="subject-percent" style="flex: 1;">
     <div class="progress">
-      <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">75%</div>
+      <div class="progress-bar <%= student.attendance.english >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.english %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.english %>%</div>
     </div>
   </div>
 
@@ -39,7 +39,7 @@
   </div>
   <div class="subject-percent" style="flex: 1;">
     <div class="progress">
-      <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+      <div class="progress-bar <%= student.attendance.math >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.math %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.math %>% </div>
     </div>
   </div>
 
@@ -52,7 +52,7 @@
   </div>
   <div class="subject-percent" style="flex: 1;">
     <div class="progress">
-      <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">90%</div>
+      <div class="progress-bar <%= student.attendance.java >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.java %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.java %>% </div>
     </div>
   </div>
 
@@ -65,7 +65,7 @@
   </div>
   <div class="subject-percent" style="flex: 1;">
     <div class="progress">
-      <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">80%</div>
+      <div class="progress-bar <%= student.attendance.web >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.web %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.web %>% </div>
     </div>
   </div>
 

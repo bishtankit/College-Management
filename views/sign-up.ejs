@@ -37,25 +37,31 @@
 
 
     <form class="form-signin" method="post" action="/sign-up">
+
+
+
+
           <img class="amity-logo" src="images/amity-logo.jpg" alt="">
           <hr>
-          <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+          <h1 class="h3 mb-3 font-weight-normal">Add a Student</h1>
           <hr>
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input name="username" type="username" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-          <hr>
-          <label for="inputPassword" class="sr-only">Create Password</label>
-          <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Create Password" required="">
-          <hr>
-          <div class="">
-          <input name="fname" type="text" class="form-control" placeholder="First Name" required="" autofocus="">
-          <hr>
-          <input name="lname" type="text" class="form-control" placeholder="Last Name" required="" autofocus="">
-          </div>
-          <div class="sign-in-button">
-                <button class="btn btn-md btn-primary btn-block" type="submit"><h6 style="line-height: 1;">Sign up</h6></button>
-                <hr>
-                <a href="/" class="text-white bg-dark"><h4>Sign-in</h4></a>
+        <div class="row">
+          <input name="username" type="username" id="inputEmail" class="form-control col-5 mr-1 mb-2" placeholder="Email address" required="" autofocus="">
+
+          <input name="password" type="password" id="inputPassword" class="form-control col-5" placeholder="Create Password" required="">
+
+          <input name="fname" type="text" class="form-control col-5 mr-1 mb-2" placeholder="First Name" required="" autofocus="">
+
+          <input name="lname" type="text" class="form-control col-5" placeholder="Last Name" required="" autofocus="">
+
+          <select name="course" style="width: 80px;" class="col-3">
+          <option value="mca">MCA</option>
+          <option value="mba">MBA</option>
+          <option value="mtech">MTech</option>
+          </select>
+        </div>
+          <div class="sign-in-button mt-4">
+                <button class="btn btn-md btn-primary btn-block" type="submit"><h6>Confirm</h6></button>
           </div>
 
 
