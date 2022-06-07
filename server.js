@@ -36,10 +36,10 @@ const studentSchema = new mongoose.Schema({
   fname: String,
   lname: String,
   attendance: {
-    english: Number,
-    math: Number,
-    java: Number,
-    web: Number
+    subject1: Number,
+    subject2: Number,
+    subject3: Number,
+    subject4: Number
   },
   course: String,
   subjects: [String]
@@ -95,6 +95,39 @@ app.get("/sign-up", function(req, res){
 });
 
 
+app.get("/mtech", function(req, res){
+
+  if(req.isAuthenticated()){
+    if(req.user.fname == "Admin"){
+
+
+      Student.find({course: "mtech"}, function(err, found){
+        for(var i=0; i<found.length; i++){
+          if(found[i].fname == "Admin"){
+            found.splice(i, 1);
+          }
+        }
+          res.render("mtech.ejs",{students: found, success: false});
+      })
+
+    }else{
+      res.redirect("/");
+    }
+  }else{
+    res.render("welcome.ejs");
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -116,6 +149,45 @@ app.get("/log-out", function(req, res){
 });
 
 
+
+
+app.get("/remove/:id", function(req, res){
+
+  if(req.isAuthenticated()){
+    if(req.user.fname == "Admin"){
+
+Student.deleteOne({ _id: req.params.id }, function(err){
+  if(err){
+    console.log(err);
+  }else{
+    console.log("successfully deleted the student");
+    Student.find({}, function(err, found){
+      if(err){
+        console.log(err);
+      }else{
+        for(var i=0; i<found.length; i++){
+          if(found[i].fname == "Admin"){
+            found.splice(i, 1);
+          }
+        }
+          res.redirect("/");
+      }
+
+
+    })
+  }
+});
+
+    }else{
+      res.render("home.ejs");
+    }
+  }else{
+    res.render("welcome.ejs");
+  }
+
+
+
+});
 
 
 
@@ -185,6 +257,12 @@ app.post("/sign-up", function(req, res){
               found.subjects.push("management");
               found.subjects.push("economics");
               found.subjects.push("accounting");
+                break;
+              case "mtech":
+                found.subjects.push("english");
+                found.subjects.push("engineering");
+                found.subjects.push("math");
+                found.subjects.push("database");
 
             }
 
@@ -211,20 +289,21 @@ app.post("/set-attendance", function(req, res){
 Student.findById(req.body.id, function(err, found){
   if(found){
 
-     if(req.body.english != ""){
-       found.attendance.english = req.body.english;
+
+     if(req.body.subject1 != ""){
+       found.attendance.subject1 = req.body.subject1;
      }
 
-      if(req.body.java != ""){
-        found.attendance.java = req.body.java;
+      if(req.body.subject2 != ""){
+        found.attendance.subject2 = req.body.subject2;
       }
 
-      if(req.body.math != ""){
-        found.attendance.math = req.body.math;
+      if(req.body.subject3 != ""){
+        found.attendance.subject3 = req.body.subject3;
       }
 
-      if(req.body.web != ""){
-        found.attendance.web = req.body.web;
+      if(req.body.subject4 != ""){
+        found.attendance.subject4 = req.body.subject4;
       }
 
 
@@ -245,8 +324,6 @@ Student.findById(req.body.id, function(err, found){
 });
 
 });
-
-
 
 
 
