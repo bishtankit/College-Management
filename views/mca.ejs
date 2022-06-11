@@ -1,0 +1,83 @@
+<%- include('adminHeader'); -%>
+
+
+
+
+<div class="pt-5">
+
+
+<% if(success) { %>
+
+  <div class="alert alert-warning alert-dismissible fade show w-50" role="alert">
+    <h5 class="d-inline">Student attendance has been set succesfully!</h5>
+    <a type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="fa-solid fa-xmark fa-lg"></i>
+    </a>
+  </div>
+
+<% } %>
+
+
+
+<div class="row">
+<% var i = 0; %>
+
+  <% students.forEach((student)=>{ %>
+  <% i = i+1; %>
+    <div class="card my-4 col-3 mx-4" >
+      <div class="card-body">
+        <h5 class="card-title"> <%= student.fname %> <%= student.lname %> </h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= student.username %> </h6>
+
+
+        <button class="btn btn-secondary rounded" type="button" data-toggle="collapse" data-target="#a<%= i %>" aria-expanded="false" aria-controls="collapseExample">
+            <h6>Manage student</h6>
+          </button>
+
+      </div>
+    </div>
+
+
+
+    <form class="collapse" id="a<%= i %>" method="post" action="/set-attendance">
+      <div class="card card-body w-50 d-block">
+        <h5>Manage <strong> <%= student.fname %>'s </strong> attendance</h5>
+        <label for=""><h5><%= student.subjects[0] %>:</h5></label>
+          <input type="number" name="subject1" placeholder="subject 1" min="0" max="100" value= <%= student.attendance.subject1 %> >
+
+
+        <label for=""><h5><%= student.subjects[1] %>:</h5></label>
+            <input type="number" name="subject2" placeholder="subject 2" min="0" max="100" value= <%= student.attendance.subject2 %> >
+
+        <label for=""><h5><%= student.subjects[2] %>:</h5></label>
+        <input type="number" name="subject3" placeholder="subject 3" min="0" max="100" value= <%= student.attendance.subject3 %> >
+
+        <label for=""><h5><%= student.subjects[3] %>:</h5></label>
+        <input type="number" name="subject4" placeholder="subject 4" min="0" max="100" value= <%= student.attendance.subject4 %> >
+
+        <input type="hidden" name="course" value= <%= student.course %> >
+        <button type="submit" name="id" class="btn btn-md btn-primary rounded" value= <%= student._id %> >Submit</button>
+        <a class="btn btn-md btn-danger rounded" href="/remove/<%= student._id %>" >Remove Student</a>
+      </div>
+
+    </form>
+
+  <% }) %>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<%- include('adminFooter'); -%>

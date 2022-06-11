@@ -7,6 +7,17 @@ h6{
   line-height: 1;
 }
 
+.notice-div{
+  background-color: #F2E3D5;
+  max-width: 250px;
+}
+
+.notice-input{
+
+  height: 40px;
+  width: 170%;
+}
+
 
 .nav-style{
   background-color: #81C8FF;

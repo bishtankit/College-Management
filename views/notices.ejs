@@ -1,0 +1,88 @@
+<%- include('adminHeader'); -%>
+
+<div class="pt-4">
+
+</div>
+
+<div class="pt-5">
+
+<form action="/notices" method="post">
+  <div class="d-flex justify-content-around">
+
+  <div class="">
+      <h3><strong>MCA Notice</strong></h3>
+      <input type="text" name="mcaNotice" value="" placeholder="type here.." class="notice-input">
+      <input type="submit" hidden />
+      <hr>
+        <%notices.forEach(function(notice){%>
+          <div class="rounded notice-div">
+
+            <h5><%=notice.mca%>
+
+           <% if(notice.mca != ""){ %>
+             <a href="#">remove</a>
+        <% } %>
+
+            </h5>
+
+          </div>
+          <%});%>
+  </div>
+
+  <div class="">
+    <h3><strong>Mtech Notice</strong></h3>
+    <input type="text" name="mtechNotice" value="" placeholder="type here.." class="notice-input">
+    <hr>
+    <%notices.forEach(function(notice){%>
+      <div class="rounded notice-div">
+
+        <h5><%=notice.mtech%>
+
+       <% if(notice.mtech != ""){ %>
+         <a href="#">remove</a>
+    <% } %>
+
+        </h5>
+
+      </div>
+      <%});%>
+  </div>
+
+  <div class="">
+    <h3><strong>MBA Notice</strong></h3>
+      <input type="text" name="mbaNotice" value="" placeholder="type here.." class="notice-input">
+      <hr>
+      <%notices.forEach(function(notice){%>
+        <div class="rounded notice-div">
+
+          <h5><%=notice.mba%>
+
+         <% if(notice.mba != ""){ %>
+           <a href="#">remove</a>
+      <% } %>
+
+          </h5>
+
+        </div>
+        <%});%>
+  </div>
+
+
+  </div>
+</form>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<%- include('adminFooter'); -%>

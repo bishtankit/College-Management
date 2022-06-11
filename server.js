@@ -32,6 +32,18 @@ app.use(passport.session());
 
 mongoose.connect("mongodb://localhost:27017/collegeDB");
 
+const noticeSchema = new mongoose.Schema({
+
+mca: String,
+mtech: String,
+mba: String,
+general: String
+
+});
+
+const Notice = mongoose.model("Notice", noticeSchema);
+
+
 const studentSchema = new mongoose.Schema({
   fname: String,
   lname: String,
@@ -120,6 +132,56 @@ app.get("/mtech", function(req, res){
 
 
 
+app.get("/mca", function(req, res){
+
+  if(req.isAuthenticated()){
+    if(req.user.fname == "Admin"){
+
+
+      Student.find({course: "mca"}, function(err, found){
+        for(var i=0; i<found.length; i++){
+          if(found[i].fname == "Admin"){
+            found.splice(i, 1);
+          }
+        }
+          res.render("mca.ejs",{students: found, success: false});
+      })
+
+    }else{
+      res.redirect("/");
+    }
+  }else{
+    res.render("welcome.ejs");
+  }
+});
+
+
+
+app.get("/mba", function(req, res){
+
+  if(req.isAuthenticated()){
+    if(req.user.fname == "Admin"){
+
+
+      Student.find({course: "mba"}, function(err, found){
+        for(var i=0; i<found.length; i++){
+          if(found[i].fname == "Admin"){
+            found.splice(i, 1);
+          }
+        }
+          res.render("mba.ejs",{students: found, success: false});
+      })
+
+    }else{
+      res.redirect("/");
+    }
+  }else{
+    res.render("welcome.ejs");
+  }
+});
+
+
+
 
 
 
@@ -188,6 +250,51 @@ Student.deleteOne({ _id: req.params.id }, function(err){
 
 
 });
+
+
+
+
+app.get("/notices", function(req, res){
+
+  if(req.isAuthenticated()){
+    if(req.user.fname == "Admin"){
+
+
+      Notice.find({}, function(err, found){
+
+    found.forEach(function(notice){
+
+    if( (notice.mca == "" && notice.mtech == "") && notice.mba == "" ){
+
+      Notice.deleteOne({ _id: notice._id }, function (err) {
+       if(err){
+         console.log("cant delete");
+       }else{
+         console.log("deleted successfully");
+       }
+           });
+
+    }
+
+    });
+
+
+          res.render("notices.ejs", {notices: found});
+      })
+
+    }else{
+      res.redirect("/");
+    }
+  }else{
+    res.render("welcome.ejs");
+  }
+});
+
+
+
+
+
+
 
 
 
@@ -285,46 +392,85 @@ app.post("/sign-up", function(req, res){
 app.post("/set-attendance", function(req, res){
 
 
+  if(req.isAuthenticated()){
+    if(req.user.fname == "Admin"){
 
-Student.findById(req.body.id, function(err, found){
-  if(found){
-
-
-     if(req.body.subject1 != ""){
-       found.attendance.subject1 = req.body.subject1;
-     }
-
-      if(req.body.subject2 != ""){
-        found.attendance.subject2 = req.body.subject2;
-      }
-
-      if(req.body.subject3 != ""){
-        found.attendance.subject3 = req.body.subject3;
-      }
-
-      if(req.body.subject4 != ""){
-        found.attendance.subject4 = req.body.subject4;
-      }
+      Student.findById(req.body.id, function(err, found){
+        if(found){
 
 
-      found.save();
+           if(req.body.subject1 != ""){
+             found.attendance.subject1 = req.body.subject1;
+           }
 
-      Student.find({}, function(err, foundStudents){
-        for(var i=0; i<foundStudents.length; i++){
-          if(foundStudents[i].fname == "Admin"){
-            foundStudents.splice(i, 1);
-          }
+            if(req.body.subject2 != ""){
+              found.attendance.subject2 = req.body.subject2;
+            }
+
+            if(req.body.subject3 != ""){
+              found.attendance.subject3 = req.body.subject3;
+            }
+
+            if(req.body.subject4 != ""){
+              found.attendance.subject4 = req.body.subject4;
+            }
+
+
+            found.save();
+
+            Student.find({}, function(err, foundStudents){
+              for(var i=0; i<foundStudents.length; i++){
+                if(foundStudents[i].fname == "Admin"){
+                  foundStudents.splice(i, 1);
+                }
+              }
+                res.render("adminDashboard.ejs",{students: foundStudents, success: true});
+            });
+
+        }else{
+            res.send("Something went wrong! please try again later");
         }
-          res.render("adminDashboard.ejs",{students: foundStudents, success: true});
+      });
+    }else{
+      res.redirect("/");
+    }
+  }else{
+    res.redirect("/");
+  }
+
+
+
+});
+
+
+app.post("/notices", function(req, res){
+
+
+  if(req.isAuthenticated()){
+
+    if(req.user.fname == "Admin"){
+
+      const notice = new Notice({});
+
+      notice.mca = req.body.mcaNotice;
+      notice.mtech = req.body.mtechNotice;
+      notice.mba = req.body.mbaNotice;
+
+      notice.save(function(){
+        console.log("notice saved successfully");
+        res.redirect("/notices");
       });
 
+
+    }else{
+      res.redirect("/");
+    }
   }else{
-      res.send("Something went wrong! please try again later");
+    res.redirect("/")
   }
-});
+
 
 });
-
 
 
 
