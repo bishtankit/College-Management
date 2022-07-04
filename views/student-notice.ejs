@@ -1,0 +1,66 @@
+<%- include('header'); -%>
+
+
+  <div class="d-flex justify-content-around">
+
+
+<div class="">
+    <h3><strong>MCA Notice</strong></h3>
+    <hr>
+
+      <%notices.forEach(function(notice){%>
+          <div class="rounded notice-div">
+
+            <h5><%=notice.mca%>
+
+
+            </h5>
+
+          </div>
+
+        <%});%>
+
+</div>
+
+
+
+<div class="">
+  <h3><strong>Mtech Notice</strong></h3>
+  <hr>
+  <%notices.forEach(function(notice){%>
+    <div class="rounded notice-div">
+
+      <h5><%=notice.mtech%>
+
+
+      </h5>
+
+    </div>
+    <%});%>
+</div>
+
+
+
+<div class="">
+  <h3><strong>MBA Notice</strong></h3>
+    <hr>
+    <%notices.forEach(function(notice){%>
+      <div class="rounded notice-div">
+
+        <h5><%=notice.mba%>
+
+
+        </h5>
+
+      </div>
+      <%});%>
+</div>
+
+
+</div>
+
+
+
+
+
+<%- include('footer'); -%>

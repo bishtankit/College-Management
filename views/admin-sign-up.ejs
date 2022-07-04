@@ -20,54 +20,18 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-
-
-
   <body class="home-background">
 
 
+<div class="">
 
-<div align="center" class="home-content">
-
-
-<div class="sign-in-form">
-
-
-    <form class="form-signin" method="post" action="/sign-in">
-          <img class="amity-logo" src="images/amity-logo.jpg" alt="">
-          <hr>
-          <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-          <hr>
-          <input name="username" type="username" id="inputEmail" class="form-control w-50 m-auto" placeholder="Email address" required="" autofocus="">
-          <hr>
-          <input name="password" type="password" id="inputPassword" class="form-control w-50 m-auto" placeholder="Password" required="">
-          <div class="checkbox mb-3">
-
-          </div>
-          <div class="sign-in-button">
-                <button class="btn btn-md btn-primary btn-block" type="submit"><h6 style="line-height: 1;">Sign in</h6></button>
-          </div>
-<hr>
-
- <a href="/admin-sign-up" class="mt-4">Admin sign-up?</a>
-
-
-
-
+  <form class="" action="/admin-confirm-signup" method="post">
+    <h3>Enter the University password below</h3>
+    <input type="password" name="university_password">
+    <button type="submit" name="button" class="btn btn-sm btn-primary rounded">confirm</button>
   </form>
 
 </div>
-
-
-
-
-
-</div>
-
-
-
-
-
 
 
 <%- include('footer'); -%>

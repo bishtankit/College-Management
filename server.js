@@ -54,7 +54,8 @@ const studentSchema = new mongoose.Schema({
     subject4: Number
   },
   course: String,
-  subjects: [String]
+  subjects: [String],
+  admin: String
 });
 
 studentSchema.plugin(passportLocalMongoose);
@@ -66,15 +67,19 @@ passport.use(Student.createStrategy());
 passport.serializeUser(Student.serializeUser());
 passport.deserializeUser(Student.deserializeUser());
 
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+
 //GET ROUTES
 
 app.get("/", function(req, res){
   if(req.isAuthenticated()){
-    if(req.user.fname == "Admin"){
+    if(req.user.admin == "true"){
 
 Student.find({}, function(err, found){
   for(var i=0; i<found.length; i++){
-    if(found[i].fname == "Admin"){
+    if(found[i].admin == "true"){
       found.splice(i, 1);
     }
   }
@@ -82,7 +87,9 @@ Student.find({}, function(err, found){
 })
 
     }else{
-      res.render("home.ejs");
+      Student.findById(req.user.id, function(err, found){
+        res.render("home.ejs",{student: found});
+      });
     }
   }else{
     res.render("welcome.ejs");
@@ -94,7 +101,7 @@ Student.find({}, function(err, found){
 app.get("/sign-up", function(req, res){
 
   if(req.isAuthenticated()){
-    if(req.user.fname == "Admin"){
+    if(req.user.admin == "true"){
 
     res.render("sign-up.ejs");
 
@@ -110,12 +117,12 @@ app.get("/sign-up", function(req, res){
 app.get("/mtech", function(req, res){
 
   if(req.isAuthenticated()){
-    if(req.user.fname == "Admin"){
+    if(req.user.admin == "true"){
 
 
       Student.find({course: "mtech"}, function(err, found){
         for(var i=0; i<found.length; i++){
-          if(found[i].fname == "Admin"){
+          if(found[i].admin == "true"){
             found.splice(i, 1);
           }
         }
@@ -135,12 +142,12 @@ app.get("/mtech", function(req, res){
 app.get("/mca", function(req, res){
 
   if(req.isAuthenticated()){
-    if(req.user.fname == "Admin"){
+    if(req.user.admin == "true"){
 
 
       Student.find({course: "mca"}, function(err, found){
         for(var i=0; i<found.length; i++){
-          if(found[i].fname == "Admin"){
+          if(found[i].admin == "true"){
             found.splice(i, 1);
           }
         }
@@ -160,12 +167,12 @@ app.get("/mca", function(req, res){
 app.get("/mba", function(req, res){
 
   if(req.isAuthenticated()){
-    if(req.user.fname == "Admin"){
+    if(req.user.admin == "true"){
 
 
       Student.find({course: "mba"}, function(err, found){
         for(var i=0; i<found.length; i++){
-          if(found[i].fname == "Admin"){
+          if(found[i].admin == "true"){
             found.splice(i, 1);
           }
         }
@@ -195,14 +202,45 @@ app.get("/mba", function(req, res){
 
 app.get("/attendance", function(req, res){
 
-Student.findById(req.user.id, function(err, found){
-  res.render("attendance.ejs",{student: found});
-})
+  if(req.isAuthenticated()){
+    if(req.user.admin == "true"){
+
+
+  res.redirect("/");
+
+    }else{
+
+      Student.findById(req.user.id, function(err, found){
+        res.render("attendance.ejs",{student: found});
+      })
+    }
+  }else{
+  res.redirect("/");
+  }
+
 
 });
 
 app.get("/faculty", function(req, res){
-res.render("faculty.ejs");
+
+
+  if(req.isAuthenticated()){
+    if(req.user.admin == "true"){
+
+
+  res.redirect("/");
+
+    }else{
+
+      Student.findById(req.user.id, function(err, found){
+        res.render("faculty.ejs",{student: found});
+      })
+    }
+  }else{
+  res.redirect("/");
+  }
+
+
 });
 
 app.get("/log-out", function(req, res){
@@ -216,7 +254,7 @@ app.get("/log-out", function(req, res){
 app.get("/remove/:id", function(req, res){
 
   if(req.isAuthenticated()){
-    if(req.user.fname == "Admin"){
+    if(req.user.admin == "true"){
 
 Student.deleteOne({ _id: req.params.id }, function(err){
   if(err){
@@ -228,7 +266,7 @@ Student.deleteOne({ _id: req.params.id }, function(err){
         console.log(err);
       }else{
         for(var i=0; i<found.length; i++){
-          if(found[i].fname == "Admin"){
+          if(found[i].admin == "true"){
             found.splice(i, 1);
           }
         }
@@ -241,7 +279,7 @@ Student.deleteOne({ _id: req.params.id }, function(err){
 });
 
     }else{
-      res.render("home.ejs");
+      res.redirect("/");
     }
   }else{
     res.render("welcome.ejs");
@@ -257,7 +295,7 @@ Student.deleteOne({ _id: req.params.id }, function(err){
 app.get("/notices", function(req, res){
 
   if(req.isAuthenticated()){
-    if(req.user.fname == "Admin"){
+    if(req.user.admin == "true"){
 
 
       Notice.find({}, function(err, found){
@@ -291,6 +329,45 @@ app.get("/notices", function(req, res){
 });
 
 
+
+app.get("/admin-sign-up", function(req,res){
+  res.render("admin-sign-up.ejs");
+})
+
+app.post("/admin-confirm-signup", function(req,res){
+  console.log(req.body.university_password);
+
+if(req.body.university_password == 123){
+    res.render("admin-sign-up-confirm");
+}else{
+  res.send("Wrong password");
+}
+
+
+});
+
+app.post("/new-admin", function(req, res) {
+  Student.find({admin: "true"}, function(err, found){
+  })
+
+    Student.register({username: req.body.username}, req.body.password, function(err, user){
+      if(err){
+        console.log(err);
+        res.send("User with the given mobile number is registered with us please login");
+      }else{
+      passport.authenticate("local")(req, res, function(){
+             Student.findById(req.user.id, function(err, found){
+            found.admin = "true";
+            found.save(function(){
+              res.redirect("/");
+            });
+             })
+          });
+
+        }
+});
+
+})
 
 
 
@@ -351,6 +428,7 @@ app.post("/sign-up", function(req, res){
             found.fname = req.body.fname;
             found.lname = req.body.lname;
             found.course = req.body.course;
+            found.admin = "false";
 
             switch (req.body.course) {
               case "mca":
@@ -393,7 +471,7 @@ app.post("/set-attendance", function(req, res){
 
 
   if(req.isAuthenticated()){
-    if(req.user.fname == "Admin"){
+    if(req.user.admin == "true"){
 
       Student.findById(req.body.id, function(err, found){
         if(found){
@@ -420,11 +498,11 @@ app.post("/set-attendance", function(req, res){
 
             Student.find({}, function(err, foundStudents){
               for(var i=0; i<foundStudents.length; i++){
-                if(foundStudents[i].fname == "Admin"){
+                if(foundStudents[i].admin == "true"){
                   foundStudents.splice(i, 1);
                 }
               }
-                res.render("adminDashboard.ejs",{students: foundStudents, success: true});
+                res.render("adminDashboard.ejs",{students: foundStudents, success: "true"});
             });
 
         }else{
@@ -448,7 +526,7 @@ app.post("/notices", function(req, res){
 
   if(req.isAuthenticated()){
 
-    if(req.user.fname == "Admin"){
+    if(req.user.admin == "true"){
 
       const notice = new Notice({});
 
@@ -471,6 +549,39 @@ app.post("/notices", function(req, res){
 
 
 });
+
+
+app.post("/remove_notice", function(req, res){
+  console.log(req.body);
+})
+
+
+app.post("/get_notices", function(req, res) {
+
+  if(req.isAuthenticated()){
+
+
+  Notice.find({}, function(err, foundNotices) {
+    if(err){
+      console.log(err);
+    }else{
+      if(foundNotices){
+        console.log(foundNotices);
+        Student.findById(req.user.id, function(err, found){
+          res.render("student-notice.ejs",{student: found, notices: foundNotices});
+        });
+      }
+    }
+  })
+
+}else{
+  res.redirect("/");
+}
+
+
+
+});
+
 
 
 

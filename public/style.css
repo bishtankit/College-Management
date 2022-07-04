@@ -1,5 +1,5 @@
 .home-background{
-  background-image: url('images/home.jpg');
+  background-image: url('images/home3.jpg');
   opacity: 88%;
 }
 
@@ -50,7 +50,6 @@ strong{
 .sign-in-form{
   text-align: center;
   width: 35%;
-  height: 100%;
   padding-top: 10%;
 }
 
@@ -142,8 +141,6 @@ header{
 /* Attendance page styling */
 
 .attendance-page-div{
-  width: 50vw;
-  height: 25vh;
   background-color: #E7E7E7;
   margin: auto;
   border-radius: 20px;

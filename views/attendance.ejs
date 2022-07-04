@@ -1,7 +1,7 @@
 <%- include('header'); -%>
 
 
-<div class="attendance-page-div">
+<div class="attendance-page-div w-50">
 
   <div style="padding: 2%;">
 
@@ -22,11 +22,11 @@
 <div class="flex">
 
   <div class="subject" style="flex: 1; text-align: left;">
-    <h3>English</h3>
+    <h3><%= student.subjects[0] %></h3>
   </div>
   <div class="subject-percent" style="flex: 1;">
     <div class="progress">
-      <div class="progress-bar <%= student.attendance.english >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.english %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.english %>%</div>
+      <div class="progress-bar <%= student.attendance.subject1 >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.subject1 %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.subject1 %>%</div>
     </div>
   </div>
 
@@ -35,11 +35,11 @@
 <div class="flex">
 
   <div class="subject" style="flex: 1; text-align: left;">
-    <h3>Math</h3>
+    <h3><%= student.subjects[1] %></h3>
   </div>
   <div class="subject-percent" style="flex: 1;">
     <div class="progress">
-      <div class="progress-bar <%= student.attendance.math >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.math %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.math %>% </div>
+      <div class="progress-bar <%= student.attendance.subject2 >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.subject2 %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.subject2 %>% </div>
     </div>
   </div>
 
@@ -48,11 +48,11 @@
 <div class="flex">
 
   <div class="subject" style="flex: 1; text-align: left;">
-    <h3>Core Java</h3>
+    <h3><%= student.subjects[2] %></h3>
   </div>
   <div class="subject-percent" style="flex: 1;">
     <div class="progress">
-      <div class="progress-bar <%= student.attendance.java >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.java %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.java %>% </div>
+      <div class="progress-bar <%= student.attendance.subject3 >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.subject3 %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.subject3 %>% </div>
     </div>
   </div>
 
@@ -61,11 +61,11 @@
 <div class="flex">
 
   <div class="subject" style="flex: 1; text-align: left;">
-    <h3>Web Development</h3>
+    <h3><%= student.subjects[3] %></h3>
   </div>
   <div class="subject-percent" style="flex: 1;">
     <div class="progress">
-      <div class="progress-bar <%= student.attendance.web >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.web %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.web %>% </div>
+      <div class="progress-bar <%= student.attendance.subject4 >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= student.attendance.subject4 %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"> <%= student.attendance.subject4 %>% </div>
     </div>
   </div>
 

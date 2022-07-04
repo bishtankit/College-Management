@@ -14,19 +14,19 @@
       <input type="text" name="mcaNotice" value="" placeholder="type here.." class="notice-input">
       <input type="submit" hidden />
       <hr>
+
         <%notices.forEach(function(notice){%>
-          <div class="rounded notice-div">
+            <div class="rounded notice-div">
 
-            <h5><%=notice.mca%>
+              <h5><%=notice.mca%>
 
-           <% if(notice.mca != ""){ %>
-             <a href="#">remove</a>
-        <% } %>
 
-            </h5>
+              </h5>
 
-          </div>
+            </div>
+
           <%});%>
+
   </div>
 
   <div class="">
@@ -38,9 +38,6 @@
 
         <h5><%=notice.mtech%>
 
-       <% if(notice.mtech != ""){ %>
-         <a href="#">remove</a>
-    <% } %>
 
         </h5>
 
@@ -57,9 +54,6 @@
 
           <h5><%=notice.mba%>
 
-         <% if(notice.mba != ""){ %>
-           <a href="#">remove</a>
-      <% } %>
 
           </h5>
 

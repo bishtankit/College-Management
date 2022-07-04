@@ -40,19 +40,19 @@
 
 
     <form class="collapse" id="a<%= i %>" method="post" action="/set-attendance">
-      <div class="card card-body w-50 d-block">
+      <div class="card card-body w-75 d-block">
         <h5>Manage <strong> <%= student.fname %>'s </strong> attendance</h5>
-        <label for=""><h5><%= student.subjects[0] %>:</h5></label>
+        <label for=""><h6><%= student.subjects[0] %>:</h6></label>
           <input type="number" name="subject1" placeholder="subject 1" min="0" max="100" value= <%= student.attendance.subject1 %> >
 
 
-        <label for=""><h5><%= student.subjects[1] %>:</h5></label>
+        <label for=""><h6><%= student.subjects[1] %>:</h6></label>
             <input type="number" name="subject2" placeholder="subject 2" min="0" max="100" value= <%= student.attendance.subject2 %> >
 
-        <label for=""><h5><%= student.subjects[2] %>:</h5></label>
+        <label for=""><h6><%= student.subjects[2] %>:</h6></label>
         <input type="number" name="subject3" placeholder="subject 3" min="0" max="100" value= <%= student.attendance.subject3 %> >
 
-        <label for=""><h5><%= student.subjects[3] %>:</h5></label>
+        <label for=""><h6><%= student.subjects[3] %>:</h6></label>
         <input type="number" name="subject4" placeholder="subject 4" min="0" max="100" value= <%= student.attendance.subject4 %> >
 
         <input type="hidden" name="course" value= <%= student.course %> >

@@ -29,7 +29,7 @@
 <div>
 
   <nav class="navbar navbar-expand-lg navbar-light nav-style">
-    <div style="margin-right: 55%; margin-left: 4%;">
+    <div style="margin-right: 5%; margin-left: 4%;">
       <a class="navbar-brand" href="/"><h1><strong>Amity</strong></h1></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -44,14 +44,21 @@
         <li class="nav-item">
           <a class="nav-link" href="/fee">Fee Details</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/courses">Result</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" href="/attendance">Attendance</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/faculty">Faculty</a>
+        </li>
+        <li class="nav-item">
+
+          <form class="" action="/get_notices" method="post">
+            <button class="nav-link btn-info rounded" name= "course" style="border: none; background: none;" value= <%= student.course %> >Notices</button>
+          </form>
+
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/log-out">Log-out</a>

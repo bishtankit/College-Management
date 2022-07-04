@@ -1,22 +1,24 @@
 <%- include('header'); -%>
 
 
+
 <div class="flex-container">
 
 
-<div class="Attendance-div flex-div">
+<div class="Attendance-div flex-div m-1">
 
   <div style="padding: 5%;">
 <h3>Attendance:</h3>
 <hr>
 <div class="progress">
-  <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">75%</div>
+  <div class="progress-bar <%= (student.attendance.subject1 + student.attendance.subject2 + student.attendance.subject3 + student.attendance.subject4)/4 >= 70 ? 'bg-success' : 'bg-danger' %>" role="progressbar" style="width: <%= (student.attendance.subject1 + student.attendance.subject2 + student.attendance.subject3 + student.attendance.subject4)/4 %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+    <%= (student.attendance.subject1 + student.attendance.subject2 + student.attendance.subject3 + student.attendance.subject4)/4 %> </div>
 </div>
   </div>
 
 </div>
 
-<div class="fee-div flex-div">
+<div class="fee-div flex-div m-1">
 
   <div style="padding: 5%;">
   <h3>Fee Due:</h3>
@@ -25,7 +27,7 @@
 
 </div>
 
-<div class="details-div flex-div">
+<div class="details-div flex-div m-1">
 
   <div style="padding: 5%;">
   <h3>MS Teams Details:</h3>
